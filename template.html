@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>template & slot</title>
+</head>
+<body>
+    <h1>template是不会在页面上显示的document-fragment</h1>
+    <template id="template1">
+        <div>template1</div>
+    </template>
+    <template id="template2">
+        <div>template2</div>
+    </template>
+    <div id="show-template">通过JS获取#template2渲染到页面上：</div>
+    <script>
+        const template2 = document.querySelector('#template2')
+        const div = document.querySelector('#show-template')
+        div.appendChild(template2.content)
+    </script>
+
+    <h1>slot需配合web component使用</h1>
+    <template id="template3">
+        <div>template slot content:</div>
+        <p><slot></slot></p>
+        <p>named slot：<slot name="named"></slot></p>
+        <p>嵌套 slot 无效：<slot name="a"><slot name="b"></slot></slot></p>
+    </template>
+    <custom-p>
+        <b>匿名slot</b>
+        <b slot="named">具名slot</b>
+        <b slot="a">嵌套a</b>
+        <b slot="b">嵌套b</b>
+        <div>
+            在template外使用slot无效：
+            <slot>匿名slot</slot>
+            <slot name="named slot">具名slot</slot>
+        </div>
+    </custom-p>
+    <script>
+        customElements.define(
+            "custom-p",
+            class extends HTMLElement {
+                constructor() {
+                    super();
+                    const template = document.querySelector('#template3')
+                    let templateContent = template.content;
+
+                    const shadowRoot = this.attachShadow({ mode: "open" });
+                    shadowRoot.appendChild(templateContent.cloneNode(true));
+                }
+            }
+        )
+    </script>
+</body>
+</html>

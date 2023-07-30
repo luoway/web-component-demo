@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>自定义元素</title>
+        <script>
+            class PreCustomElement extends HTMLElement{
+                constructor(){
+                    super();
+                    const shadow = this.attachShadow({mode:'open'});
+                    const div = document.createElement('div')
+                    div.style="font-style: italic;"
+                    div.innerText = `自定义元素<${this.tagName.toLowerCase()}>，在元素渲染前定义，读不到元素上的内容`
+                    shadow.appendChild(div);
+                    console.log('preCustomElement', this.getAttribute('data-text'), this.innerHTML)
+                }
+            }
+            class PreCustomEventElement extends HTMLElement{
+                constructor(){
+                    super();
+                    const shadow = this.attachShadow({mode:'open'});
+                    const div = document.createElement('div')
+                    div.style="font-style: italic;"
+                    div.innerText = `自定义元素<${this.tagName.toLowerCase()}>，在元素渲染前定义，使用生命周期回调`
+                    shadow.appendChild(div);
+                }
+                connectedCallback(){
+                    console.log('preCustomEventElement connectedCallback', this.getAttribute('data-text'), this.innerHTML, this.innerText)
+                }
+            }
+            customElements.define('pre-custom', PreCustomElement);
+            customElements.define('pre-custom-event', PreCustomEventElement);
+        </script>
+    </head>
+    <body>
+        <h1>Autonomous custom elements</h1>
+        <pre-custom data-text="000">0</pre-custom>
+        <pre-custom-event data-text="111">1</pre-custom-event>
+        <no-content>111</no-content>
+        <inner-content><b>222</b></inner-content>
+        <script>
+            class NoContentElement extends HTMLElement{
+                constructor(){
+                    super();
+                    const shadow = this.attachShadow({mode:'open'});
+                    const div = document.createElement('div')
+                    div.innerHTML = '11111'
+                    this.appendChild(div)
+                    shadow.appendChild(document.createTextNode(`自定义元素<${this.tagName.toLowerCase()}>，元素不会展示非shodow dom内容`));
+                }
+            }
+            class InnerContentElement extends HTMLElement{
+                constructor(){
+                    super();
+                    const shadow = this.attachShadow({mode:'open'});
+                    const div = document.createElement('div')
+                    div.innerHTML = `自定义元素&lt;${this.tagName.toLowerCase()}&gt;：${this.innerHTML}`
+                    shadow.appendChild(div);
+                }
+            }
+            customElements.define('no-content', NoContentElement);
+            customElements.define('inner-content', InnerContentElement);
+        </script>
+
+        <h1>Customized built-in elements（Safari不支持）</h1>
+        <ul is="custom-ul">
+            <li is="custom-li">custom-li</li>
+        </ul>
+        <script>
+            class CustomUL extends HTMLUListElement{
+                constructor(){
+                    super();
+                    this.style = 'background-color: #eee'
+                }
+            }
+            class CustomLi extends HTMLLIElement{
+                constructor(){
+                    super();
+                    this.style = 'background-color: #aaa'
+                }
+                connectedCallback(){
+                    console.log('CustomLi connectedCallback')
+                }
+            }
+            customElements.define('custom-ul', CustomUL, {extends: 'ul'});
+            customElements.define('custom-li', CustomLi, {extends: 'li'});
+        </script>
+    </body>
+</html>
