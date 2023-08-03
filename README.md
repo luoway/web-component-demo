@@ -1,4 +1,4 @@
-# web-component-demo
+# web-demo
 
-- [custom element](http://luoway.github.io/web-component-demo/custom.html)
-- [template and slot](http://luoway.github.io/web-component-demo/template.html)
+- [custom element](http://luoway.github.io/web-demo/custom.html)
+- [template and slot](http://luoway.github.io/web-demo/template.html)
