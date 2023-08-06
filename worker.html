@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Worker</title>
+</head>
+<body>
+    <button onclick="postMessage()">post to worker</button>
+    <button onclick="terminate()">terminate worker</button>
+    <button onclick="postError()">post error to worker</button>
+    <script>
+        const myWorker = new Worker("worker.js");
+
+        myWorker.onmessage = (e) => {
+            console.log("Message received from worker script", e);
+        }
+
+        myWorker.onerror = (e) => {
+            console.log("Error from worker script", e);
+            e.preventDefault();
+        }
+
+        function postMessage() {
+            myWorker.postMessage("Hello");
+        }
+        function terminate() {
+            myWorker.terminate();
+        }
+        function postError() {
+            myWorker.postMessage("error");
+        }
+    </script>
+
+    <script type="data">
+        console.log('嵌入式创建的worker');
+        onmessage = (e) => {
+            console.log("收到消息", e.data);
+        }
+    </script>
+    <script>
+        const blob = new Blob(
+            [ document.querySelector('script[type="data"]').textContent ],
+            { type: "text/javascript" },
+        )
+        const embeddedWorker = new Worker(URL.createObjectURL(blob))
+        embeddedWorker.postMessage("Hello worker")
+    </script>
+    <div>
+        <button onclick="postToSharedWorker()">post to shared worker</button>
+        要调试SharedWorker，地址栏输入：<input type="text" readonly value="chrome://inspect/#workers"/>
+    </div>
+    <script>
+        const sharedWorker = new SharedWorker("workerShared.js")
+        sharedWorker.port.start()
+        sharedWorker.port.onmessage = (e) => {
+            console.log("SharedWorker发来的消息：", e.data);
+        }
+        function postToSharedWorker(){
+            sharedWorker.port.postMessage("Hello shared worker")
+        }
+    </script>
+</body>
+</html>
