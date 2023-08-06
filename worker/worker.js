@@ -12,12 +12,8 @@ onerror = (e) => {
     console.log("error in worker:", e);
 }
 
-const sharedWorker = new SharedWorker("workerShared.js")
-sharedWorker.port.start()
-sharedWorker.port.onmessage = (e) => {
-    console.log("worker收到SharedWorker发来的消息：", e.data);
-}
-function postToSharedWorker(){
-    sharedWorker.port.postMessage("Hello shared worker. I'm worker, too.");
-}
-postToSharedWorker()
+const subWorker = new Worker("sub-worker.js")
+subWorker.addEventListener("message", (e) => {
+    console.log('Message received from sub worker',e)
+})
+subWorker.postMessage("I'm parent");

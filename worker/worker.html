@@ -51,11 +51,11 @@
         要调试SharedWorker，地址栏输入：<input type="text" readonly value="chrome://inspect/#workers"/>
     </div>
     <script>
-        const sharedWorker = new SharedWorker("workerShared.js")
-        sharedWorker.port.start()
-        sharedWorker.port.onmessage = (e) => {
+        const sharedWorker = new SharedWorker("shared-worker.js")
+        sharedWorker.port.start() //使用addEventListener时，没有start将收不到消息
+        sharedWorker.port.addEventListener("message", (e) => {
             console.log("SharedWorker发来的消息：", e.data);
-        }
+        })
         function postToSharedWorker(){
             sharedWorker.port.postMessage("Hello shared worker")
         }
