@@ -21,6 +21,7 @@
         })
         .then((registration) => {
             let serviceWorker;
+            // 三种生命周期
             if (registration.installing) {
                 serviceWorker = registration.installing;
                 document.querySelector("#kind").textContent = "installing";
@@ -31,12 +32,16 @@
                 serviceWorker = registration.active;
                 document.querySelector("#kind").textContent = "active";
             }
+            // 五种状态
             if (serviceWorker) {
                 console.log(serviceWorker.state);
                 serviceWorker.addEventListener("statechange", (e) => {
                     console.log(e.target.state);
                 });
             }
+        })
+        .catch(err=>{
+            console.log(err)
         })
     </script>
 </body>
