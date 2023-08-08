@@ -16,7 +16,9 @@
         <p id="json"></p>
     </div>
     <script>
-        navigator.serviceWorker.register('service-worker-fetch.js')
+        navigator.serviceWorker.register('service-worker-fetch.js', {
+            scope: '/service-worker/'
+        })
 
         navigator.serviceWorker.ready.then((registration)=>{
             console.log(registration.active)
