@@ -8,13 +8,8 @@
 </head>
 <body>
     <div id="kind"></div>
+    <a href="message.html" target="_blank">message page</a>
     <script>
-        this.addEventListener('message', (data) => {
-            if (data.source == 'service-worker') {
-                console.log(data.msg, data)
-            }
-        })
-        
         navigator.serviceWorker
             .register("service-worker.js", {
             scope: "./",
@@ -42,6 +37,10 @@
         })
         .catch(err=>{
             console.log(err)
+        })
+
+        navigator.serviceWorker.addEventListener("message", (e)=>{
+            console.log('main page received serviceWorker message:', e.data)
         })
     </script>
 </body>
