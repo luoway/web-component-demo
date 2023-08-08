@@ -2,11 +2,10 @@
 let version = Date.now().toString()
 
 self.addEventListener('install', event => {
+    self.skipWaiting()
     // 开始预取并缓存
     event.waitUntil(
-        caches.open(version).then(cache => cache.add('sample.json')).then(() => {
-            self.skipWaiting()
-        })
+        caches.open(version).then(cache => cache.add('sample.json'))
     )
 })
 
