@@ -8,9 +8,11 @@
 </head>
 <body>
     <div>fetch page</div>
+    <p>service worker 'fetch' 事件可以监听控制页面对所有资源的HTTP(s)请求</p>
     <button onclick="fetchJSON(0)">加载预取的json</button>
     <button onclick="fetchJSON(1)">加载被修改的json</button>
     <button onclick="fetchJSON(2)">加载不存在的json</button>
+    <button onclick="xhrJSON()">XHR加载空的json</button>
     <div>
         <p>json内容如下：</p>
         <p id="json"></p>
@@ -30,6 +32,19 @@
             }).then((json)=>{
                 document.querySelector('#json').textContent = JSON.stringify(json)
             })
+        }
+
+        function xhrJSON(){
+            const xhr = new XMLHttpRequest()
+
+            xhr.onreadystatechange = ()=>{
+                if(xhr.readyState === 4){
+                    document.querySelector('#json').textContent = xhr.responseText
+                }
+            }
+
+            xhr.open('GET', 'empty.json')
+            xhr.send()
         }
     </script>
 </body>

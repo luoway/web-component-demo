@@ -24,6 +24,8 @@ self.addEventListener('activate', (event) => {
 })
 
 self.addEventListener('fetch', (event) => {
+    console.log('service worker fetch: ', event.request.url);
+
     if(event.request.url.includes('sample.json')) {
         event.respondWith(
             caches.open(version).then(cache => {
