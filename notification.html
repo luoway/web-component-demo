@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #tips{
+            visibility: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div id="status"></div>
+    <button onclick="requestPermission()">requestPermission</button>
+    <button onclick="notify()">notify</button>
+    <div id="tips">通知已发出，若未收到，注意检查浏览器是否开启了系统通知权限</div>
+    <script>
+        window.onload = function(){
+            document.querySelector('#status').innerText = Notification.permission
+        }
+
+        function requestPermission(){
+            Notification.requestPermission(function (status) {
+                if (Notification.permission !== status) {
+                    Notification.permission = status;
+                    document.querySelector('#status').innerText = Notification.permission
+                }
+            });
+        }
+
+        function notify(){
+            if(Notification.permission !== 'granted') return false
+            
+            const inst = new Notification('localhost', {
+                // dir: 'rtl',
+                // lang: 'zh-CN',
+                // badge: 'https://fecat.win/favicon.ico',
+                body: '这是通知',
+                // tag: '这是tag',
+                // icon: 'https://fecat.win/favicon.ico',
+                // image: 'https://fecat.win/favicon.ico',
+                // data: {content: 'data'},
+                // vibrate: [200, 100, 200],
+                // renotify: true,
+                // requireInteraction: true,
+            })
+            document.querySelector('#tips').style.visibility = 'visible'
+        }
+    </script>
+</body>
+</html>
