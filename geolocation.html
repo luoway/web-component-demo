@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>geolocation</title>
+    <style type="text/css">
+    #container{
+        /*地图(容器)显示大小*/
+        width:800px;
+        height:800px;
+    }
+    </style>
+</head>
+<body>
+    <a href="https://lbs.qq.com/webApi/javascriptGL/glGuide/glBasic" target="_blank">腾讯地图API</a>
+    <div id="container"></div>
+    
+    <script src="https://map.qq.com/api/gljs?v=1.exp&key=NYXBZ-I3IAA-H3QKP-C2SMM-HL3OS-H5BL3"></script>
+    <script>
+        //地图初始化函数，本例取名为init，开发者可根据实际情况定义
+        function initMap(longitude, latitude) {
+            //定义地图中心点坐标
+            var center = new TMap.LatLng(longitude, latitude)
+            //定义map变量，调用 TMap.Map() 构造函数创建地图
+            var map = new TMap.Map(document.getElementById('container'), {
+                center: center,//设置地图中心点坐标
+                zoom: 17.2,   //设置地图缩放级别
+                // pitch: 43.5,  //设置俯仰角
+                // rotation: 45    //设置地图旋转角度
+            });
+        }
+        navigator.geolocation.getCurrentPosition(position=>{
+            console.log(position);
+            console.log(position.coords.latitude, position.coords.longitude);
+            initMap(position.coords.latitude, position.coords.longitude)
+        }, err=>{
+            console.log(err);
+        }, {
+            enableHighAccuracy: true,
+        })
+    </script>
+</body>
+</html>
