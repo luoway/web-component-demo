@@ -8,16 +8,20 @@
 </head>
 <body>
     <div id="kind"></div>
+    <p>一个源下的service worker 中的 console 信息，会显示在同源的所有页面中，无论scope如何</p>
     <div>
         <a href="message.html" target="_blank">message page</a>
     </div>
     <div>
-        <a href="fetch.html" target="_blank">fetch page</a>
+        <a href="../service-worker-fetch/fetch.html" target="_blank">fetch page</a>
+    </div>
+    <div>
+        <a href="../service-worker-notify/notification.html" target="_blank">notify page</a>
     </div>
     <script>
         navigator.serviceWorker
             .register("service-worker.js", {
-            scope: "./",
+            scope: "./", //一个源下可以注册不同scope下的worker，多个worker只有一个生效
         })
         .then((registration) => {
             let serviceWorker;

@@ -1,6 +1,7 @@
 console.log('service worker loaded', self, globalThis)
 
 self.addEventListener('install', event => {
+    self.skipWaiting()
     event.waitUntil(new Promise((resolve, reject)=>{
         console.log('安装回调', event, self.clients)
         // reject() //让安装失败进入redundant
@@ -23,6 +24,6 @@ self.addEventListener('activate', (event) => {
 })
 
 self.addEventListener('message', (event) => {
-    console.log('received message:', event.data)
+    console.log('service-worker.js received message:', event.data)
     event.source.postMessage('I\'m service worker')
 })
