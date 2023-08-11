@@ -34,7 +34,7 @@
         function notify(){
             if(Notification.permission !== 'granted') return false
             
-            _execNotify(Date.now())
+            _execNotify(new Date().toLocaleTimeString())
             
             document.querySelector('#tips').style.visibility = 'visible'
         }
@@ -45,13 +45,13 @@
                 lang: 'en-US', // chrome浏览器忽略此配置
                 badge: 'http://lf3-cdn-tos.bytescm.com/obj/static/xitu_juejin_web/24127194d5b158d7eaf8f09a256c5d01.svg',
                 body: '这是通知',
-                tag: '123', // 使用不同的tag发出多个通知，tag相同覆盖同个通知
+                // tag: '123', // 相当于ID。tag相同覆盖同个通知
                 icon: 'https://fecat.win/favicon.ico',
                 image: 'https://avatars.githubusercontent.com/u/12523415?v=4',
                 data: {content: 'data'}, // 通知实例携带数据
                 vibrate: [200, 100, 200], // 震动参数
-                renotify: true, // tag相同覆盖时重新通知，是否有效受操作系统限制
-                requireInteraction: true, // 通知需要用户交互才收回
+                // renotify: true, // tag相同覆盖时重新通知，是否有效受操作系统限制
+                // requireInteraction: true, // 通知需要用户交互才收回。chrome浏览器设置后不会出现提示
             })
 
             inst.addEventListener('click', console.log)
