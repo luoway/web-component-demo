@@ -50,7 +50,7 @@ self.addEventListener('notificationclose', event=>{
         self.registration.showNotification('您关闭了通知', {
             body: '不好意思打扰了。所有通知4s后自动关闭',
         }).then(()=>{
-            self.registration.getNotifications({tag: 'close'}).then(list=>{
+            self.registration.getNotifications().then(list=>{
                 setTimeout(()=>list.forEach(item=>item.close()), 4000)
             })
         })
