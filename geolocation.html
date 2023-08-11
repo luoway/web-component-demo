@@ -14,6 +14,7 @@
     </style>
 </head>
 <body>
+    <div id="data"></div>
     <a href="https://lbs.qq.com/webApi/javascriptGL/glGuide/glBasic" target="_blank">腾讯地图API</a>
     <div id="container"></div>
     
@@ -33,10 +34,11 @@
         }
         navigator.geolocation.getCurrentPosition(position=>{
             console.log(position);
-            console.log(position.coords.latitude, position.coords.longitude);
+            document.querySelector('#data').innerText = `经度：${position.coords.longitude}，纬度：${position.coords.latitude}`
             initMap(position.coords.latitude, position.coords.longitude)
         }, err=>{
             console.log(err);
+            document.querySelector('#data').innerText = `获取位置出错：${JSON.stringify(err)}`
         }, {
             enableHighAccuracy: true,
         })
