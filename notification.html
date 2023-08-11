@@ -16,7 +16,7 @@
     <button onclick="requestPermission()">requestPermission</button>
     <button onclick="notify()">notify</button>
     <div id="tips">通知已发出，若未收到，注意检查浏览器是否开启了系统通知权限</div>
-    <a href="./service-worker/notification.html">通过service worker发通知，可以带actions按钮</a>
+    <a href="./service-worker-notify/notification.html">通过service worker发通知，可以带actions按钮</a>
     <script>
         window.onload = function(){
             document.querySelector('#status').innerText = Notification.permission
