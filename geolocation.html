@@ -5,13 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>geolocation</title>
-    <style type="text/css">
-    #container{
-        /*地图(容器)显示大小*/
-        width:800px;
-        height:800px;
-    }
-    </style>
 </head>
 <body>
     <div id="data"></div>
@@ -20,6 +13,10 @@
     
     <script src="https://map.qq.com/api/gljs?v=1.exp&key=NYXBZ-I3IAA-H3QKP-C2SMM-HL3OS-H5BL3"></script>
     <script>
+        const $ct = document.querySelector('#container')
+        $ct.style.width = Math.min(window.screen.availWidth, 800) + 'px'
+        $ct.style.height = Math.min(window.screen.availHeight - 50, 800) + 'px'
+
         //地图初始化函数，本例取名为init，开发者可根据实际情况定义
         function initMap(longitude, latitude) {
             //定义地图中心点坐标
