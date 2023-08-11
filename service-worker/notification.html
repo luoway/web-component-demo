@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>service-worker</title>
+    </head>
+    <body>
+        <div id="status"></div>
+        <button onclick="requestPermission()">requestPermission</button>
+        <div>Notification service worker page</div>
+        <button onclick="notify()">通过service worker发通知</button>
+        <div>通知发出后，关闭当前页或切换到其他页面，再操作通知按钮试试</div>
+        <a href="../notification.html"
+            >页面通过Notification发通知，不可带actions按钮</a
+        >
+        <script>
+            window.onload = function(){
+                document.querySelector('#status').innerText = Notification.permission
+            }
+    
+            function requestPermission(){
+                Notification.requestPermission().then(()=>{
+                    // denied \ granted \ default
+                    document.querySelector('#status').innerText = Notification.permission
+                })
+            }
+
+            navigator.serviceWorker.register('service-worker-notify.js', {
+                scope: './',
+            })
+
+            let notify = () => {}
+            navigator.serviceWorker.ready.then((registration) => {
+                notify = () => {
+                    registration.active.postMessage('notify')
+                }
+            })
+        </script>
+    </body>
+</html>

@@ -16,19 +16,17 @@
     <button onclick="requestPermission()">requestPermission</button>
     <button onclick="notify()">notify</button>
     <div id="tips">通知已发出，若未收到，注意检查浏览器是否开启了系统通知权限</div>
+    <a href="./service-worker/notification.html">通过service worker发通知，可以带actions按钮</a>
     <script>
         window.onload = function(){
             document.querySelector('#status').innerText = Notification.permission
         }
 
         function requestPermission(){
-            Notification.requestPermission(function (status) {
+            Notification.requestPermission().then(()=>{
                 // denied \ granted \ default
-                if (Notification.permission !== status) {
-                    Notification.permission = status;
-                    document.querySelector('#status').innerText = Notification.permission
-                }
-            });
+                document.querySelector('#status').innerText = Notification.permission
+            })
         }
 
         function notify(){
@@ -51,7 +49,7 @@
                 data: {content: 'data'}, // 通知实例携带数据
                 vibrate: [200, 100, 200], // 震动参数
                 // renotify: true, // tag相同覆盖时重新通知，是否有效受操作系统限制
-                // requireInteraction: true, // 通知需要用户交互才收回。chrome浏览器设置后不会出现提示
+                requireInteraction: true, // 通知需要用户交互才收回。chrome浏览器设置后不会发出通知
             })
 
             inst.addEventListener('click', console.log)
