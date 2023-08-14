@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Device Orientation</title>
+    <style>
+        .data{
+            white-space: pre;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <h2>deviceorientation Event</h2>
+        <div id="event1" class="data"></div>
+        <h2>devicemotion Event</h2>
+        <div id="event2" class="data"></div>
+    </div>
+    <script>
+        window.addEventListener('deviceorientation', e=>{
+            const absolute = e.absolute;
+            const alpha = e.alpha?.toFixed(1);
+            const beta = e.beta?.toFixed(1);
+            const gamma = e.gamma?.toFixed(1);
+            document.querySelector('#event1').innerText = JSON.stringify({
+                absolute,
+                alpha,
+                beta,
+                gamma,
+            }, null, 4)
+        }, true)
+        window.addEventListener('devicemotion', e=>{
+            const acceleration = e.acceleration;
+            const accelerationIncludingGravity = e.accelerationIncludingGravity;
+            const rotationRate = e.rotationRate;
+            const interval = e.interval;
+            document.querySelector('#event2').innerText = JSON.stringify({
+                acceleration: {
+                    x: acceleration?.x?.toFixed(1),
+                    y: acceleration?.y?.toFixed(1),
+                    z: acceleration?.z?.toFixed(1),
+                },
+                accelerationIncludingGravity: {
+                    x: accelerationIncludingGravity?.x?.toFixed(1),
+                    y: accelerationIncludingGravity?.y?.toFixed(1),
+                    z: accelerationIncludingGravity?.z?.toFixed(1),
+                },
+                rotationRate: {
+                    alpha: rotationRate?.alpha?.toFixed(1),
+                    beta: rotationRate?.beta?.toFixed(1),
+                    gamma: rotationRate?.gamma?.toFixed(1),
+                },
+                interval
+            }, null, 4)
+        }, true)
+    </script>
+</body>
+</html>
